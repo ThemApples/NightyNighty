@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NightyNight</string>
+    <string-array name="mood">
+        <item>Mood</item>
+        <item>Happy</item>
+        <item>Calm</item>
+        <item>Sad</item>
+        <item>Angry</item>
+    </string-array>
+</resources>
