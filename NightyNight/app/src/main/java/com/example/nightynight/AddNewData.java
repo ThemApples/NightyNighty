@@ -12,14 +12,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class AddNewData extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    Button add;
-    Button close;
+    FloatingActionButton add;
+    FloatingActionButton close;
 
     Spinner spin;
 
@@ -41,10 +43,10 @@ public class AddNewData extends AppCompatActivity implements View.OnClickListene
         spin.setAdapter(adapter);
         spin.setOnItemSelectedListener(this);
 
-        add = (Button) findViewById(R.id.add_b);
+        add = (FloatingActionButton) findViewById(R.id.add_b);
         add.setOnClickListener(this);
 
-        close = (Button) findViewById(R.id.del_c);
+        close = (FloatingActionButton) findViewById(R.id.del_c);
         close.setOnClickListener(this);
 
         title = findViewById(R.id.title);

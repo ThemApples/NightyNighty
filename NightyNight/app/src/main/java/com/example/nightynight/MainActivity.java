@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     public static final ArrayList<Info> PassOver = new ArrayList<>();
     public static String bottomContent;
 
-
     private TextView text;
 
     @Override
@@ -50,29 +49,34 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
         //text = findViewById(R.id.Inside);
         //text.setText("hello");
+        //loaddata();
 
         a = new ArrayList<>();
-
         for(int i = 0; i< user_database.size(); i++)
         {
             if(user_database.get(i).getMood().equals("Sad"))
             {
                 a.add(new userEntry(R.drawable.ic_sad,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
             }
             else if(user_database.get(i).getMood().equals("Angry"))
             {
                 a.add(new userEntry(R.drawable.ic_angry,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
             }
             else if(user_database.get(i).getMood().equals("Happy"))
             {
                 a.add(new userEntry(R.drawable.ic_happy,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
             }
             else if(user_database.get(i).getMood().equals("Calm"))
             {
                 a.add(new userEntry(R.drawable.ic_calm,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
             }
             else{
                 a.add(new userEntry(R.drawable.ic_android,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
             }
         }
 
