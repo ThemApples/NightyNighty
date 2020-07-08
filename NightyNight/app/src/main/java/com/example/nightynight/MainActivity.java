@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     private RecyclerView.LayoutManager rlm;
 
     private ArrayList<userEntry> a;
+    private ArrayList<userEntry> loader;
     public static ArrayList<Info> user_database = new ArrayList<Info>();
     public static Info information = new Info();
 
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         //text = findViewById(R.id.Inside);
         //text.setText("hello");
         //loaddata();
+        loader = new ArrayList<>();
+        setup();
 
         a = new ArrayList<>();
         for(int i = 0; i< user_database.size(); i++)
@@ -155,8 +158,17 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         Gson gson = new Gson();
         String json = sp.getString("Backup data",null);
         Type type = new TypeToken<ArrayList<Info>>() {}.getType();
-        user_database = gson.fromJson(json,type);
+        loader = gson.fromJson(json,type);
+    }
 
+    public void setup()
+    {
+        for(int i = 0; i < loader.size(); i++)
+        {
+            user_database.add(loader.get(i));
+        }
+
+        show("loader Done");
     }
 
     private void show(String display)
