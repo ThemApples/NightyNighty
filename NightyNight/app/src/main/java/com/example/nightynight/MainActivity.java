@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     private RecyclerView.LayoutManager rlm;
 
     private ArrayList<userEntry> a;
-    private ArrayList<userEntry> loader;
+    private ArrayList<Info> loader;
     public static ArrayList<Info> user_database = new ArrayList<Info>();
     public static Info information = new Info();
 
@@ -50,39 +50,12 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
         //text = findViewById(R.id.Inside);
         //text.setText("hello");
-        //loaddata();
+        loaddata();
         loader = new ArrayList<>();
         setup();
 
         a = new ArrayList<>();
-        for(int i = 0; i< user_database.size(); i++)
-        {
-            if(user_database.get(i).getMood().equals("Sad"))
-            {
-                a.add(new userEntry(R.drawable.ic_sad,user_database.get(i).getTitle(),user_database.get(i).getDate()));
-                saveData();
-            }
-            else if(user_database.get(i).getMood().equals("Angry"))
-            {
-                a.add(new userEntry(R.drawable.ic_angry,user_database.get(i).getTitle(),user_database.get(i).getDate()));
-                saveData();
-            }
-            else if(user_database.get(i).getMood().equals("Happy"))
-            {
-                a.add(new userEntry(R.drawable.ic_happy,user_database.get(i).getTitle(),user_database.get(i).getDate()));
-                saveData();
-            }
-            else if(user_database.get(i).getMood().equals("Calm"))
-            {
-                a.add(new userEntry(R.drawable.ic_calm,user_database.get(i).getTitle(),user_database.get(i).getDate()));
-                saveData();
-            }
-            else{
-                a.add(new userEntry(R.drawable.ic_android,user_database.get(i).getTitle(),user_database.get(i).getDate()));
-                saveData();
-            }
-        }
-
+        saveOtherSide();
 
         aButton = findViewById(R.id.float_b);
         aButton.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +95,37 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
 
     }
 
+    public void saveOtherSide()
+    {
+        for(int i = 0; i< user_database.size(); i++)
+        {
+            if(user_database.get(i).getMood().equals("Sad"))
+            {
+                a.add(new userEntry(R.drawable.ic_sad,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
+            }
+            else if(user_database.get(i).getMood().equals("Angry"))
+            {
+                a.add(new userEntry(R.drawable.ic_angry,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
+            }
+            else if(user_database.get(i).getMood().equals("Happy"))
+            {
+                a.add(new userEntry(R.drawable.ic_happy,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
+            }
+            else if(user_database.get(i).getMood().equals("Calm"))
+            {
+                a.add(new userEntry(R.drawable.ic_calm,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
+            }
+            else{
+                a.add(new userEntry(R.drawable.ic_android,user_database.get(i).getTitle(),user_database.get(i).getDate()));
+                saveData();
+            }
+        }
+    }
+
     private void bottomSheetSetup(String title,String mood,String date,String description)
     {
         bottomContent = title.toUpperCase() + "\n " + date.toUpperCase() +" \n" + mood.toUpperCase() +"\n\n"+ description;
@@ -130,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
     private void openAddActvity() {
         Intent intent = new Intent(this, AddNewData.class);
         startActivity(intent);
-
     }
 
     public void removeItem(int position)
@@ -158,17 +161,14 @@ public class MainActivity extends AppCompatActivity implements BottomSheetDialog
         Gson gson = new Gson();
         String json = sp.getString("Backup data",null);
         Type type = new TypeToken<ArrayList<Info>>() {}.getType();
-        loader = gson.fromJson(json,type);
+        loader= gson.fromJson(json,type);
+
+        //show(String.valueOf(a.size()));
     }
 
     public void setup()
     {
-        for(int i = 0; i < loader.size(); i++)
-        {
-            user_database.add(loader.get(i));
-        }
-
-        show("loader Done");
+        show(String.valueOf(loader.size()));
     }
 
     private void show(String display)
