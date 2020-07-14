@@ -6,25 +6,56 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     app:cardCornerRadius="4dp">
-    <RelativeLayout
+
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/textview_line1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:text="Line 1"
             android:textColor="@android:color/black"
             android:textSize="20sp"
+            android:padding="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        android:id="@+id/expandable_layout">
+
         <TextView
             android:id="@+id/textview_line_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textview_line1"
             android:layout_marginStart="8dp"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:text="Line 2"
-            android:textSize="15sp" />
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textview_line_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_below="@id/textview_line_2"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:text="Line 3"
+            android:textSize="20sp" />
+
     </RelativeLayout>
+
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
