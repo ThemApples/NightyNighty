@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +18,19 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private final String FILE_NAME = "Test.csv";
     ArrayList<ExampleItem> mExampleList;
     private RecyclerView mRecyclerView;
     private ExampleAdapter mAdapter;
@@ -91,14 +99,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void setInsertButton() {
         Button buttonInsert = findViewById(R.id.button_insert);
-        buttonInsert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {            }
-        });
+        buttonInsert.setOnClickListener(this);
     }
     private void insertItem(String line1,String line2) {
         generateTime();
-        mExampleList.add(new ExampleItem(line1,currentDateTimeString,"Description:\n"+line2));
+        mExampleList.add(new ExampleItem(line1,currentDateTimeString,line2));
         mAdapter.notifyItemInserted(mExampleList.size());
     }
 
@@ -131,12 +136,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
     }
 
+    public void generateFile() throws IOException {
+        FileOutputStream fos = null;
+
+        String Beginning = "Title,Date/Time,Description"+"\n";
+        String storagelocation = "";
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(Beginning.getBytes());
+            for(int o=0;o<mExampleList.size();o++)
+            {
+                String lin1 = mExampleList.get(o).getLine1();
+                String lin2 = mExampleList.get(o).getLine2();
+                String lin3 = mExampleList.get(o).getLine3();
+                String combined = lin1 + "," + lin2 +","+ lin3+"\n";
+                fos.write(combined.getBytes());
+            }
+
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME,
+                    Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+         }
+        
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId())
         {
             case R.id.button_save:
                 changeActivity();
+                break;
+            case R.id.button_insert:
+                showMessage("Button Insert Pressed");
+                //showMessage(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
+                try {
+                    generateFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+               }
                 break;
         }
     }
